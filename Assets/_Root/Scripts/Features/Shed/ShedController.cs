@@ -6,6 +6,7 @@ using UnityEngine;
 using Features.Inventory;
 using Features.Shed.Upgrade;
 using JetBrains.Annotations;
+using Object = UnityEngine.Object;
 
 namespace Features.Shed
 {
@@ -15,59 +16,40 @@ namespace Features.Shed
 
     internal class ShedController : BaseController, IShedController
     {
-        private readonly ResourcePath _viewPath = new ResourcePath("Prefabs/Shed/ShedView");
-        private readonly ResourcePath _dataSourcePath = new ResourcePath("Configs/Shed/UpgradeItemConfigDataSource");
-
-        private readonly ShedView _view;
+        private readonly IShedView _view;
         private readonly ProfilePlayer _profilePlayer;
-        private readonly InventoryController _inventoryController;
-        private readonly UpgradeHandlersRepository _upgradeHandlersRepository;
+        private readonly InventoryContext _inventoryContext;
+        private readonly IUpgradeHandlersRepository _upgradeHandlersRepository;
 
 
         public ShedController(
-            [NotNull] Transform placeForUi,
-            [NotNull] ProfilePlayer profilePlayer)
+            //[NotNull] Transform placeForUi,
+            //[NotNull] ProfilePlayer profilePlayer,
+            [NotNull] InventoryContext inventoryContext,
+            [NotNull] IUpgradeHandlersRepository createRepository,
+            [NotNull] IShedView loadView)
         {
-            if (placeForUi == null)
-                throw new ArgumentNullException(nameof(placeForUi));
+            //if (placeForUi == null)
+            //    throw new ArgumentNullException(nameof(placeForUi));
 
-            _profilePlayer
-                = profilePlayer ?? throw new ArgumentNullException(nameof(profilePlayer));
+            //_profilePlayer
+            //    = profilePlayer ?? throw new ArgumentNullException(nameof(profilePlayer));
 
-            _upgradeHandlersRepository = CreateRepository();
-            _inventoryController = CreateInventoryController(placeForUi);
-            _view = LoadView(placeForUi);
+            _inventoryContext
+                = inventoryContext ?? throw new ArgumentNullException(nameof(inventoryContext));
+
+            _upgradeHandlersRepository
+                = createRepository ?? throw new ArgumentNullException(nameof(createRepository));
+
+            _view
+                = loadView ?? throw new ArgumentNullException(nameof(loadView));
+
+            //    = CreateInventoryContext(placeForUi, _profilePlayer.Inventory);
+            //_upgradeHandlersRepository = CreateRepository();
+            //_view = LoadView(placeForUi);
 
             _view.Init(Apply, Back);
         }
-
-
-        private UpgradeHandlersRepository CreateRepository()
-        {
-            UpgradeItemConfig[] upgradeConfigs = ContentDataSourceLoader.LoadUpgradeItemConfigs(_dataSourcePath);
-            var repository = new UpgradeHandlersRepository(upgradeConfigs);
-            AddRepository(repository);
-
-            return repository;
-        }
-
-        private InventoryController CreateInventoryController(Transform placeForUi)
-        {
-            var inventoryController = new InventoryController(placeForUi, _profilePlayer.Inventory);
-            AddController(inventoryController);
-
-            return inventoryController;
-        }
-
-        private ShedView LoadView(Transform placeForUi)
-        {
-            GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
-            GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
-            AddGameObject(objectView);
-
-            return objectView.GetComponent<ShedView>();
-        }
-
 
         private void Apply()
         {
@@ -79,15 +61,13 @@ namespace Features.Shed
                 _upgradeHandlersRepository.Items);
 
             _profilePlayer.CurrentState.Value = GameState.Start;
-            Log($"Apply. Current Speed: {_profilePlayer.CurrentCar.Speed}"
-                + $"Current Jump force: {_profilePlayer.CurrentCar.JumpForce}");
+            Log($"Apply. Current Speed: {_profilePlayer.CurrentCar.Speed}");
         }
 
         private void Back()
         {
             _profilePlayer.CurrentState.Value = GameState.Start;
-            Log($"Back. Current Speed: {_profilePlayer.CurrentCar.Speed}"
-                + $"Current Jump force: {_profilePlayer.CurrentCar.JumpForce}");
+            Log($"Back. Current Speed: {_profilePlayer.CurrentCar.Speed}");
         }
 
 
@@ -100,8 +80,5 @@ namespace Features.Shed
                 if (upgradeHandlers.TryGetValue(itemId, out IUpgradeHandler handler))
                     handler.Upgrade(upgradable);
         }
-
-        private void Log(string message) =>
-            Debug.Log($"[{GetType().Name}] {message}");
     }
 }

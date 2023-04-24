@@ -1,5 +1,6 @@
 using Tool;
 using Profile;
+using Services;
 using UnityEngine;
 using Game.Car;
 using Game.InputLogic;
@@ -15,8 +16,8 @@ namespace Game
 
         private readonly CarController _carController;
         private readonly InputGameController _inputGameController;
-        private readonly AbilitiesController _abilitiesController;
         private readonly TapeBackgroundController _tapeBackgroundController;
+        private readonly AbilitiesContext _abilitiesContext;
 
 
         public GameController(Transform placeForUi, ProfilePlayer profilePlayer)
@@ -26,8 +27,10 @@ namespace Game
 
             _carController = CreateCarController();
             _inputGameController = CreateInputGameController(profilePlayer, _leftMoveDiff, _rightMoveDiff);
-            _abilitiesController = CreateAbilitiesController(placeForUi, _carController);
             _tapeBackgroundController = CreateTapeBackground(_leftMoveDiff, _rightMoveDiff);
+            _abilitiesContext = CreateAbilitiesContext(placeForUi, _carController);
+
+            ServiceRoster.Analytics.SendGameStarted();
         }
 
 
@@ -56,12 +59,12 @@ namespace Game
             return carController;
         }
 
-        private AbilitiesController CreateAbilitiesController(Transform placeForUi, IAbilityActivator abilityActivator)
+        private AbilitiesContext CreateAbilitiesContext(Transform placeForUi, IAbilityActivator abilityActivator)
         {
-            var abilitiesController = new AbilitiesController(placeForUi, abilityActivator);
-            AddController(abilitiesController);
+            var context = new AbilitiesContext(placeForUi, abilityActivator);
+            AddContext(context);
 
-            return abilitiesController;
+            return context;
         }
     }
 }
