@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Ui
 {
-    public class SettingsMenuView : MonoBehaviour
+    internal class SettingsMenuView : MonoBehaviour
     {
         [SerializeField] private Button _buttonBack;
 

@@ -10,12 +10,11 @@ namespace Game.Car
         public float Speed { get; set; }
         public float JumpForce { get; set; }
 
-
         public CarModel(float speed, float jumpForce)
         {
             _defaultSpeed = speed;
-            Speed = speed;
             _defaultJumpForce = jumpForce;
+            Speed = speed;
             JumpForce = jumpForce;
         }
 

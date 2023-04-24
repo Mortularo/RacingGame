@@ -1,4 +1,3 @@
-using JoostenProductions;
 using Tool;
 using UnityEngine;
 
@@ -18,14 +17,7 @@ namespace Game.InputLogic
         }
 
 
-        private void Start() =>
-            UpdateManager.SubscribeToUpdate(Move);
-
-        private void OnDestroy() =>
-            UpdateManager.UnsubscribeFromUpdate(Move);
-
-
-        private void Move()
+        protected override void Move()
         {
             if (!SystemInfo.supportsGyroscope)
                 return;
