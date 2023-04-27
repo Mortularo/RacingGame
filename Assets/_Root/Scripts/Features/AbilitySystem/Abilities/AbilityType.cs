@@ -4,6 +4,10 @@ namespace Features.AbilitySystem.Abilities
     {
         None,
         Gun,
+<<<<<<< Updated upstream
         Jump,
+=======
+        Jump
+>>>>>>> Stashed changes
     }
 }

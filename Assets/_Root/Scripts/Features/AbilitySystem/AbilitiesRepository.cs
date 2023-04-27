@@ -18,7 +18,12 @@ namespace Features.AbilitySystem
         protected override IAbility CreateItem(AbilityItemConfig config) =>
             config.Type switch
             {
+<<<<<<< Updated upstream
                 AbilityType.Gun => new GunAbility(config),
+=======
+                AbilityType.Gun => new GunAbility(abilityItem),
+                AbilityType.Jump => new JumpAbility(abilityItem),
+>>>>>>> Stashed changes
                 _ => StubAbility.Default
             };
     }

@@ -6,14 +6,21 @@ namespace Game.Car
 {
     internal class CarController : BaseController, IAbilityActivator
     {
+<<<<<<< Updated upstream
         private readonly ResourcePath _viewPath = new ResourcePath("Prefabs/Car");
+=======
+        private readonly ResourcePath _viewPath = new ResourcePath("Prefabs/Game/Car");
+        private readonly CarModel _model;
+>>>>>>> Stashed changes
         private readonly CarView _view;
 
+        public float JumpHeight => _model.JumpForce;
         public GameObject ViewGameObject => _view.gameObject;
 
 
-        public CarController()
+        public CarController(CarModel model)
         {
+            _model = model;
             _view = LoadView();
         }
 

@@ -20,7 +20,11 @@ namespace Features.Shed
 
         private readonly ShedView _view;
         private readonly ProfilePlayer _profilePlayer;
+<<<<<<< Updated upstream
         private readonly InventoryController _inventoryController;
+=======
+        private readonly InventoryContext _inventoryContext;
+>>>>>>> Stashed changes
         private readonly UpgradeHandlersRepository _upgradeHandlersRepository;
 
 
@@ -34,14 +38,30 @@ namespace Features.Shed
             _profilePlayer
                 = profilePlayer ?? throw new ArgumentNullException(nameof(profilePlayer));
 
+<<<<<<< Updated upstream
             _upgradeHandlersRepository = CreateRepository();
             _inventoryController = CreateInventoryController(placeForUi);
+=======
+            _inventoryContext = CreateInventoryContext(placeForUi, _profilePlayer.Inventory);
+            _upgradeHandlersRepository = CreateRepository();
+>>>>>>> Stashed changes
             _view = LoadView(placeForUi);
 
             _view.Init(Apply, Back);
         }
 
 
+<<<<<<< Updated upstream
+=======
+        private InventoryContext CreateInventoryContext(Transform placeForUi, IInventoryModel model)
+        {
+            var context = new InventoryContext(placeForUi, model);
+            AddContext(context);
+
+            return context;
+        }
+
+>>>>>>> Stashed changes
         private UpgradeHandlersRepository CreateRepository()
         {
             UpgradeItemConfig[] upgradeConfigs = ContentDataSourceLoader.LoadUpgradeItemConfigs(_dataSourcePath);
@@ -51,6 +71,7 @@ namespace Features.Shed
             return repository;
         }
 
+<<<<<<< Updated upstream
         private InventoryController CreateInventoryController(Transform placeForUi)
         {
             var inventoryController = new InventoryController(placeForUi, _profilePlayer.Inventory);
@@ -63,6 +84,12 @@ namespace Features.Shed
         {
             GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
             GameObject objectView = UnityEngine.Object.Instantiate(prefab, placeForUi, false);
+=======
+        private ShedView LoadView(Transform placeForUi)
+        {
+            GameObject prefab = ResourcesLoader.LoadPrefab(_viewPath);
+            GameObject objectView = Object.Instantiate(prefab, placeForUi, false);
+>>>>>>> Stashed changes
             AddGameObject(objectView);
 
             return objectView.GetComponent<ShedView>();
@@ -79,15 +106,29 @@ namespace Features.Shed
                 _upgradeHandlersRepository.Items);
 
             _profilePlayer.CurrentState.Value = GameState.Start;
+<<<<<<< Updated upstream
             Log($"Apply. Current Speed: {_profilePlayer.CurrentCar.Speed}"
                 + $"Current Jump force: {_profilePlayer.CurrentCar.JumpForce}");
+=======
+
+            Log("Apply. " +
+                $"Current Speed: {_profilePlayer.CurrentCar.Speed}. " +
+                $"Current Jump Height: {_profilePlayer.CurrentCar.JumpForce}");
+>>>>>>> Stashed changes
         }
 
         private void Back()
         {
             _profilePlayer.CurrentState.Value = GameState.Start;
+<<<<<<< Updated upstream
             Log($"Back. Current Speed: {_profilePlayer.CurrentCar.Speed}"
                 + $"Current Jump force: {_profilePlayer.CurrentCar.JumpForce}");
+=======
+
+            Log("Back. " +
+                $"Current Speed: {_profilePlayer.CurrentCar.Speed}. " +
+                $"Current Jump Height: {_profilePlayer.CurrentCar.JumpForce}");
+>>>>>>> Stashed changes
         }
 
 

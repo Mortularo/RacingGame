@@ -4,6 +4,10 @@ namespace Features.Shed.Upgrade
     {
         None,
         Speed,
+<<<<<<< Updated upstream
         Jump
+=======
+        JumpHeight
+>>>>>>> Stashed changes
     }
 }

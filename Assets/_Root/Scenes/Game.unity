@@ -618,7 +618,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1f1f3a311c471e921b56ebcc0f1a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   SpeedCar: 15
   JumpForceCar: 2
   InitialState: 1
+=======
+  _speedCar: 15
+  _jumpHeightCar: 2
+  _initialState: 1
+>>>>>>> Stashed changes
   _placeForUi: {fileID: 1903552}

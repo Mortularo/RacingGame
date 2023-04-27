@@ -53,9 +53,12 @@ internal class MainController : BaseController
                 break;
             case GameState.Shed:
                 _shedController = new ShedController(_placeForUi, _profilePlayer);
+<<<<<<< Updated upstream
                 _mainMenuController?.Dispose();
                 _settingsMenuController?.Dispose();
                 _gameController?.Dispose();
+=======
+>>>>>>> Stashed changes
                 break;
             case GameState.Game:
                 _gameController = new GameController(_placeForUi, _profilePlayer);
@@ -71,4 +74,15 @@ internal class MainController : BaseController
                 break;
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    private void DisposeControllers()
+    {
+        _mainMenuController?.Dispose();
+        _settingsMenuController?.Dispose();
+        _shedController?.Dispose();
+        _gameController?.Dispose();
+    }
+>>>>>>> Stashed changes
 }
