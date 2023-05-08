@@ -17,7 +17,7 @@ namespace Features.Shed.Upgrade
 
         public void Upgrade(IUpgradable upgradable)
         {
-            upgradable.JumpForce += _jumpForce;
+            upgradable.JumpHeight += _jumpForce;
         }
     }
 }
