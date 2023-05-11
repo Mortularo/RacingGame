@@ -4,6 +4,13 @@ using UnityEngine.Advertisements;
 
 namespace Services.Ads.UnityAds
 {
+    internal interface IUnityAdsListener
+    {
+        void OnUnityAdsReady(string placementId);
+        void OnUnityAdsDidError(string message);
+        void OnUnityAdsDidStart(string placementId);
+        void OnUnityAdsDidFinish(string placementId, ShowResult showResult);
+    }
     internal abstract class UnityAdsPlayer : IAdsPlayer, IUnityAdsListener
     {
         public event Action Started;
@@ -18,7 +25,7 @@ namespace Services.Ads.UnityAds
         protected UnityAdsPlayer(string id)
         {
             Id = id;
-            Advertisement.AddListener(this);
+            //Advertisement.AddListener(this);
         }
 
 
@@ -85,4 +92,5 @@ namespace Services.Ads.UnityAds
         private void Error(string message) => Debug.LogError(WrapMessage(message));
         private string WrapMessage(string message) => $"[{GetType().Name}] {message}";
     }
+
 }

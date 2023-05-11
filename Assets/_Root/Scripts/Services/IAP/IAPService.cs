@@ -24,6 +24,7 @@ namespace Services.IAP
         private void Awake() =>
             InitializeProducts();
 
+        [System.Obsolete]
         private void InitializeProducts()
         {
             StandardPurchasingModule purchasingModule = StandardPurchasingModule.Instance();
@@ -101,5 +102,10 @@ namespace Services.IAP
         private void Log(string message) => Debug.Log(WrapMessage(message));
         private void Error(string message) => Debug.LogError(WrapMessage(message));
         private string WrapMessage(string message) => $"[{GetType().Name}] {message}";
+
+        void IStoreListener.OnInitializeFailed(InitializationFailureReason error, string message)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
